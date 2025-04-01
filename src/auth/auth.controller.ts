@@ -1,13 +1,14 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { UserRole } from '../user/entities/user.entity';
 
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     @Post('register')
-    async register(@Body() body: { name: string; email: string; mobile: string; password: string }) {
-        return this.authService.register(body.name, body.email, body.mobile, body.password);
+    async register(@Body() body: { name: string; email: string; mobile: string; password: string; role: UserRole }) {
+        return this.authService.register(body.name, body.email, body.mobile, body.password, body.role);
     }
 
     @Post('login')
