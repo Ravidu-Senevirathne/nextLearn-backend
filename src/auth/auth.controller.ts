@@ -4,7 +4,7 @@ import { UserRole } from '../user/entities/user.entity';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) {}
+    constructor(private readonly authService: AuthService) { }
 
     @Post('register')
     async register(@Body() body: { name: string; email: string; mobile: string; password: string; role: UserRole }) {
@@ -13,6 +13,15 @@ export class AuthController {
 
     @Post('login')
     async login(@Body() body: { email: string; password: string }) {
-        return this.authService.login(body.email, body.password);
+        const result = await this.authService.login(body.email, body.password);
+        return {
+            user: {
+                id: result.id,
+                email: result.email,
+                name: result.name,
+                role: result.role
+            },
+            token: result.access_token
+        };
     }
 }

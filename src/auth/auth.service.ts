@@ -9,7 +9,7 @@ export class AuthService {
     constructor(
         private userService: UserService,
         private jwtService: JwtService,
-    ) {}
+    ) { }
 
     async register(name: string, email: string, mobile: string, password: string, role: UserRole) {
         return this.userService.createUser(name, email, mobile, password, role);
@@ -28,6 +28,10 @@ export class AuthService {
 
         const payload = { email: user.email, sub: user.id, role: user.role };
         return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
             access_token: this.jwtService.sign(payload),
         };
     }
