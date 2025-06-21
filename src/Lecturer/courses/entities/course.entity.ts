@@ -1,16 +1,17 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  CreateDateColumn,
-  OneToMany,
-} from 'typeorm';
-import { User } from 'src/user/entities/user.entity';
-import { Lesson } from 'src/Lecturer/lessons/entities/lesson.entity';
 import { Assignment } from 'src/Lecturer/assignments/entities/assignment.entity';
-import { Quiz } from 'src/Lecturer/quiz/entities/quiz.entity';
 import { Exam } from 'src/Lecturer/exam/entities/exam.entity';
+import { Group } from 'src/Lecturer/groups/entities/group.entity';
+import { Lesson } from 'src/Lecturer/lessons/entities/lesson.entity';
+import { Quiz } from 'src/Lecturer/quiz/entities/quiz.entity';
+import { User } from 'src/user/entities/user.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Course {
@@ -62,6 +63,9 @@ export class Course {
 
   @OneToMany(() => Exam, (exam) => exam.course)
   exams: Exam[];
+
+    @OneToMany(() => Group, (group) => group.course)
+  groups: Group[];
 
   @CreateDateColumn()
   createdAt: Date;

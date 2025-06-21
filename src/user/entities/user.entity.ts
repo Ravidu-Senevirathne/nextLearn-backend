@@ -1,5 +1,6 @@
 import { Course } from 'src/Lecturer/courses/entities/course.entity';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Group } from 'src/Lecturer/groups/entities/group.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany } from 'typeorm';
 
 export enum UserRole {
     ADMIN = 'admin',
@@ -29,4 +30,7 @@ export class User {
 
     @OneToMany(() => Course, (course) => course.lecturer)
     courses: Course[];
+
+     @ManyToMany(() => Group, (group) => group.members)
+  groups: Group[];
 }
