@@ -10,6 +10,7 @@ import { CoursesModule } from './courses/courses.module';
 import { LessonsModule } from './lessons/lessons.module';
 import { AssignmentsModule } from './assignments/assignments.module';
 import { QuizModule } from './quiz/quiz.module';
+import { ExamModule } from './exam/exam.module';
 
 
 @Module({
@@ -25,7 +26,7 @@ import { QuizModule } from './quiz/quiz.module';
       synchronize: true,
       logging: true, // Enable logging to debug SQL queries
     })
-    , ReviewModule, UserModule, AuthModule, CoursesModule, LessonsModule, AssignmentsModule, QuizModule],
+    , ReviewModule, UserModule, AuthModule, CoursesModule, LessonsModule, AssignmentsModule, QuizModule, ExamModule],
 
   controllers: [AppController],
   providers: [AppService],

@@ -10,6 +10,7 @@ import { User } from 'src/user/entities/user.entity';
 import { Lesson } from 'src/lessons/entities/lesson.entity';
 import { Assignment } from 'src/assignments/entities/assignment.entity';
 import { Quiz } from 'src/quiz/entities/quiz.entity';
+import { Exam } from 'src/exam/entities/exam.entity';
 
 @Entity()
 export class Course {
@@ -57,6 +58,10 @@ export class Course {
 
    @OneToMany(() => Quiz, (quiz) => quiz.course)
   quizzes: Quiz[];
+
+  
+  @OneToMany(() => Exam, (exam) => exam.course)
+  exams: Exam[];
 
   @CreateDateColumn()
   createdAt: Date;
