@@ -18,7 +18,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 @ApiTags('exams')
 @Controller('exams')
 export class ExamsController {
-  constructor(private readonly examsService: ExamsService) {}
+  constructor(private readonly examsService: ExamsService) { }
 
   @Post()
   @ApiOperation({ summary: 'Create a new exam' })
