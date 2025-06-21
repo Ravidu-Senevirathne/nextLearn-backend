@@ -1,4 +1,5 @@
 import { Course } from 'src/Lecturer/courses/entities/course.entity';
+import { Enrollment } from 'src/Lecturer/enrollments/entities/enrollment.entity';
 import { Group } from 'src/Lecturer/groups/entities/group.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany } from 'typeorm';
 
@@ -33,4 +34,7 @@ export class User {
 
      @ManyToMany(() => Group, (group) => group.members)
   groups: Group[];
+
+   @OneToMany(() => Enrollment, (enrollment) => enrollment.student)
+  enrollments: Enrollment[];
 }

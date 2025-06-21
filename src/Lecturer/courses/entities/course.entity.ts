@@ -1,4 +1,5 @@
 import { Assignment } from 'src/Lecturer/assignments/entities/assignment.entity';
+import { Enrollment } from 'src/Lecturer/enrollments/entities/enrollment.entity';
 import { Exam } from 'src/Lecturer/exam/entities/exam.entity';
 import { Group } from 'src/Lecturer/groups/entities/group.entity';
 import { Lesson } from 'src/Lecturer/lessons/entities/lesson.entity';
@@ -64,8 +65,11 @@ export class Course {
   @OneToMany(() => Exam, (exam) => exam.course)
   exams: Exam[];
 
-    @OneToMany(() => Group, (group) => group.course)
+  @OneToMany(() => Group, (group) => group.course)
   groups: Group[];
+
+   @OneToMany(() => Enrollment, (enrollment) => enrollment.course)
+  enrollments: Enrollment[];
 
   @CreateDateColumn()
   createdAt: Date;
