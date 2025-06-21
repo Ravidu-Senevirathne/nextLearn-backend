@@ -6,6 +6,10 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { CoursesModule } from './courses/courses.module';
+import { LessonsModule } from './lessons/lessons.module';
+import { AssignmentsModule } from './assignments/assignments.module';
+
 
 @Module({
   imports: [
@@ -20,7 +24,7 @@ import { UserModule } from './user/user.module';
       synchronize: true,
       logging: true, // Enable logging to debug SQL queries
     })
-    , ReviewModule, UserModule, AuthModule],
+    , ReviewModule, UserModule, AuthModule, CoursesModule, LessonsModule, AssignmentsModule],
 
   controllers: [AppController],
   providers: [AppService],
