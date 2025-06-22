@@ -14,7 +14,9 @@ import { ExamModule } from './Lecturer/exam/exam.module';
 import { GroupsModule } from './Lecturer/groups/groups.module';
 import { EnrollmentsModule } from './Lecturer/enrollments/enrollments.module';
 import { EventsModule } from './Lecturer/events/events.module';
-import { GradesModule } from './Lecturer/grades/grades.module'; 
+import { GradesModule } from './Lecturer/grades/grades.module';
+import { ProgressModule } from './Lecturer/progress/progress.module';
+import { MessagesModule } from './messaging/messages.module';
 
 
 @Module({
@@ -32,7 +34,8 @@ import { GradesModule } from './Lecturer/grades/grades.module';
     }),
     ReviewModule, UserModule, AuthModule, CoursesModule, LessonsModule,
     AssignmentsModule, QuizModule, ExamModule, GroupsModule,
-    EnrollmentsModule, EventsModule, GradesModule
+    EnrollmentsModule, EventsModule, GradesModule, ProgressModule,
+    MessagesModule
   ],
   controllers: [AppController],
   providers: [AppService],

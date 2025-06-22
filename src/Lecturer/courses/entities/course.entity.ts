@@ -5,6 +5,7 @@ import { Exam } from 'src/Lecturer/exam/entities/exam.entity';
 import { Grade } from 'src/Lecturer/grades/entities/grade.entity';
 import { Group } from 'src/Lecturer/groups/entities/group.entity';
 import { Lesson } from 'src/Lecturer/lessons/entities/lesson.entity';
+import { Progress } from 'src/Lecturer/progress/entities/progress.entity';
 import { Quiz } from 'src/Lecturer/quiz/entities/quiz.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
@@ -77,6 +78,9 @@ export class Course {
 
   @OneToMany(() => Grade, (grade) => grade.course)
   grades: Grade[];
+
+  @OneToMany(() => Progress, (progress) => progress.course)
+  progress: Progress[];
 
   @CreateDateColumn()
   createdAt: Date;

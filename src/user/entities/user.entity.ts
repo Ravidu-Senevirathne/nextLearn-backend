@@ -10,6 +10,9 @@ import {
   ManyToMany,
 } from 'typeorm';
 import { Grade } from 'src/Lecturer/grades/entities/grade.entity';
+import { Progress } from 'src/Lecturer/progress/entities/progress.entity';
+import { Message } from 'src/messaging/entities/message.entity';
+import { ConversationParticipant } from 'src/messaging/entities/conversation-participant.entity';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -37,6 +40,21 @@ export class User {
   @Column({ type: 'enum', enum: UserRole, default: UserRole.STUDENT })
   role: UserRole;
 
+  @Column({ nullable: true })
+  firstName: string;
+
+  @Column({ nullable: true })
+  lastName: string;
+
+  @Column({ nullable: true })
+  avatarUrl: string;
+
+  @Column({ default: false })
+  isOnline: boolean;
+
+  @Column({ type: 'datetime', nullable: true })
+  lastSeen: Date | null;
+
   @OneToMany(() => Course, (course) => course.lecturer)
   courses: Course[];
 
@@ -51,4 +69,13 @@ export class User {
 
   @OneToMany(() => Grade, (grade) => grade.student)
   grades: Grade[];
+
+  @OneToMany(() => Progress, (progress) => progress.user)
+  progress: Progress[];
+
+  @OneToMany(() => Message, (message) => message.sender)
+  messages: Message[];
+
+  @OneToMany(() => ConversationParticipant, (participant) => participant.user)
+  conversations: ConversationParticipant[];
 }
