@@ -2,6 +2,7 @@ import { Assignment } from 'src/Lecturer/assignments/entities/assignment.entity'
 import { Enrollment } from 'src/Lecturer/enrollments/entities/enrollment.entity';
 import { Event } from 'src/Lecturer/events/entities/event.entity';
 import { Exam } from 'src/Lecturer/exam/entities/exam.entity';
+import { Grade } from 'src/Lecturer/grades/entities/grade.entity';
 import { Group } from 'src/Lecturer/groups/entities/group.entity';
 import { Lesson } from 'src/Lecturer/lessons/entities/lesson.entity';
 import { Quiz } from 'src/Lecturer/quiz/entities/quiz.entity';
@@ -73,6 +74,9 @@ export class Course {
 
   @OneToMany(() => Event, (event) => event.course)
   events: Event[];
+
+  @OneToMany(() => Grade, (grade) => grade.course)
+  grades: Grade[];
 
   @CreateDateColumn()
   createdAt: Date;

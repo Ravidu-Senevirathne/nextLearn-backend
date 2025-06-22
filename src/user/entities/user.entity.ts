@@ -9,6 +9,7 @@ import {
   OneToMany,
   ManyToMany,
 } from 'typeorm';
+import { Grade } from 'src/Lecturer/grades/entities/grade.entity';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -47,4 +48,7 @@ export class User {
 
   @OneToMany(() => Event, (event) => event.creator)
   events: Event[];
+
+  @OneToMany(() => Grade, (grade) => grade.student)
+  grades: Grade[];
 }

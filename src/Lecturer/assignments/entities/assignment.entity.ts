@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Course } from '../../courses/entities/course.entity';
+import { Grade } from 'src/Lecturer/grades/entities/grade.entity';
 
 @Entity()
 export class Assignment {
@@ -24,6 +25,9 @@ export class Assignment {
   @ManyToOne(() => Course, (course) => course.assignments)
   @JoinColumn({ name: 'courseId' })
   course: Course;
+
+  @OneToMany(() => Grade, (grade) => grade.assignment)
+  grades: Grade[];
 
   @Column()
   courseId: string;
