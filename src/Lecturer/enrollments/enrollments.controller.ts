@@ -19,7 +19,7 @@ import { EnrollmentStatus } from './entities/enrollment.entity';
 @ApiTags('enrollments')
 @Controller('enrollments')
 export class EnrollmentsController {
-  constructor(private readonly enrollmentsService: EnrollmentsService) {}
+  constructor(private readonly enrollmentsService: EnrollmentsService) { }
 
   @Post()
   @ApiOperation({ summary: 'Create a new enrollment' })

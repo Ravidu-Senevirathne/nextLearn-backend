@@ -8,11 +8,19 @@ import {
   Column,
   OneToMany,
   ManyToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToOne,
 } from 'typeorm';
 import { Grade } from 'src/Lecturer/grades/entities/grade.entity';
 import { Progress } from 'src/Lecturer/progress/entities/progress.entity';
 import { Message } from 'src/messaging/entities/message.entity';
 import { ConversationParticipant } from 'src/messaging/entities/conversation-participant.entity';
+import { Education } from 'src/lecturer-profile/entities/education.entity';
+import { SocialMedia } from 'src/lecturer-profile/entities/social-media.entity';
+import { NotificationSettings } from 'src/settings/entities/notification-settings.entity';
+import { ConnectedAccounts } from 'src/settings/entities/connected-accounts.entity';
+import { Session } from 'src/settings/entities/session.entity';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -55,6 +63,48 @@ export class User {
   @Column({ type: 'datetime', nullable: true })
   lastSeen: Date | null;
 
+  @Column({ nullable: true })
+  title: string;
+
+  @Column({ nullable: true })
+  location: string;
+
+  @Column({ nullable: true })
+  officeHours: string;
+
+  @Column({ nullable: true })
+  bio: string;
+
+  @Column({ type: 'date', nullable: true })
+  joinDate: Date;
+
+  @Column({ type: 'simple-array', nullable: true })
+  expertise: string[];
+
+  @Column({ default: 'public', nullable: true })
+  profileVisibility: string;
+
+  @Column({ default: 'en', nullable: true })
+  language: string;
+
+  @Column({ nullable: true })
+  timezone: string;
+
+  @Column({ default: false })
+  twoFactorEnabled: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @OneToMany(() => Education, (education) => education.user)
+  education: Education[];
+
+  @OneToMany(() => SocialMedia, (social) => social.user)
+  socialMedia: SocialMedia[];
+
   @OneToMany(() => Course, (course) => course.lecturer)
   courses: Course[];
 
@@ -78,4 +128,13 @@ export class User {
 
   @OneToMany(() => ConversationParticipant, (participant) => participant.user)
   conversations: ConversationParticipant[];
+
+  @OneToOne(() => NotificationSettings, (settings) => settings.user, { cascade: true })
+  notificationSettings: NotificationSettings;
+
+  @OneToOne(() => ConnectedAccounts, (accounts) => accounts.user, { cascade: true })
+  connectedAccounts: ConnectedAccounts;
+
+  @OneToMany(() => Session, (session) => session.user)
+  sessions: Session[];
 }

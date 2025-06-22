@@ -6,8 +6,11 @@ import {
   Get,
   Param,
   Patch,
-  Delete
+  Delete,
+  UseInterceptors,
+  UploadedFile
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
@@ -17,8 +20,23 @@ export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
   @Post()
-  create(@Body() dto: CreateCourseDto, @Request() req) {
-    return this.coursesService.create(dto, req.user);
+  @UseInterceptors(FileInterceptor('image'))
+  create(
+    @Body() createCourseDto: any,
+    @UploadedFile() file: Express.Multer.File,
+    @Request() req
+  ) {
+    // Parse the JSON strings back into arrays
+    const parsedDto: CreateCourseDto = {
+      ...createCourseDto,
+      topics: JSON.parse(createCourseDto.topics),
+      features: JSON.parse(createCourseDto.features),
+      requirements: JSON.parse(createCourseDto.requirements)
+    };
+    
+    // Add file handling logic here
+    
+    return this.coursesService.create(parsedDto, req.user);
   }
 
   @Get()

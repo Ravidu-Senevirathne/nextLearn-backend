@@ -8,9 +8,10 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.enableCors({
-    origin: '*', // Allows requests from any frontend
+    origin: 'http://localhost:3000', // Allows requests from any frontend
     methods: 'GET,POST,PUT,DELETE,PATCH,OPTIONS',
-    allowedHeaders: 'Content-Type, Authorization',
+    allowedHeaders: 'Content-Type, Authorization', // your frontend origin
+    credentials: true, 
   });
 
   // Serve static files from uploads directory
