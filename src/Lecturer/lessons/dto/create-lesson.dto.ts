@@ -10,7 +10,7 @@ export class CreateLessonDto {
   description: string;
 
   @IsOptional()
-  @IsInt()
+  @IsString()
   duration?: number;
 
   @IsNotEmpty()

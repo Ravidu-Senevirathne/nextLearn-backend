@@ -11,15 +11,17 @@ export class CreateAssignmentDto {
   description: string;
 
   @IsNotEmpty()
-  @Type(() => Date)
-  dueDate: Date;
+  @IsString()
+  dueDate: string; // Changed from Date to string to handle ISO string from frontend
 
   @IsOptional()
+  @Type(() => Number) // Needed for conversion from string to number
   @IsInt()
   totalPoints?: number;
 
   @IsOptional()
   @IsArray()
+  @IsString({ each: true })
   attachments?: string[];
 
   @IsNotEmpty()

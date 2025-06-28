@@ -5,6 +5,7 @@ import { Assignment } from './entities/assignment.entity';
 import { CreateAssignmentDto } from './dto/create-assignment.dto';
 import { UpdateAssignmentDto } from './dto/update-assignment.dto';
 import { Course } from '../courses/entities/course.entity';
+import { existsSync, mkdirSync } from 'fs';
 
 @Injectable()
 export class AssignmentsService {
@@ -13,7 +14,7 @@ export class AssignmentsService {
     private assignmentsRepository: Repository<Assignment>,
     @InjectRepository(Course)
     private coursesRepository: Repository<Course>,
-  ) {}
+  ) { }
 
   async create(createAssignmentDto: CreateAssignmentDto): Promise<Assignment> {
     const course = await this.coursesRepository.findOne({
@@ -79,6 +80,18 @@ export class AssignmentsService {
     return this.assignmentsRepository.find({
       where: { course: { id: courseId } },
       relations: ['course'],
+    });
+  }
+
+  async createWithFiles(createAssignmentDto: CreateAssignmentDto, files: Express.Multer.File[]) {
+    const uploadDir = './uploads';
+    if (!existsSync(uploadDir)) {
+      mkdirSync(uploadDir);
+    }
+    const filePaths = files.map(file => `/uploads/${file.filename}`);
+    return this.create({
+      ...createAssignmentDto,
+      attachments: filePaths,
     });
   }
 }

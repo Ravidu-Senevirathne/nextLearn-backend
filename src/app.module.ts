@@ -4,6 +4,9 @@ import { AppService } from './app.service';
 import { ReviewModule } from './review/review.module';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MulterModule } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
@@ -24,6 +27,18 @@ import { LecturerProfileModule } from './lecturer-profile/lecturer-profile.modul
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    MulterModule.register({
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (req, file, cb) => {
+          const randomName = Array(32)
+            .fill(null)
+            .map(() => (Math.round(Math.random() * 16)).toString(16))
+            .join('');
+          return cb(null, `${randomName}${extname(file.originalname)}`);
+        },
+      }),
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

@@ -22,10 +22,16 @@ import { fileStorageConfig } from '../../common/config/file-storage.config';
 export class AssignmentsController {
   constructor(private readonly assignmentsService: AssignmentsService) { }
 
+
   @Post()
-  create(@Body() createAssignmentDto: CreateAssignmentDto) {
-    return this.assignmentsService.create(createAssignmentDto);
+  @UseInterceptors(FilesInterceptor('attachments')) // Expect `attachments` in multipart form
+  async create(
+    @Body() createAssignmentDto: CreateAssignmentDto,
+    @UploadedFiles() files: Express.Multer.File[],
+  ) {
+    return this.assignmentsService.createWithFiles(createAssignmentDto, files);
   }
+
 
   @Get()
   findAll(@Query('courseId') courseId?: string) {
@@ -55,17 +61,19 @@ export class AssignmentsController {
 
   @Post('upload')
   @UseInterceptors(FilesInterceptor('files', 10, fileStorageConfig))
-  @UseInterceptors(FileUploadInterceptor)
   async uploadFiles(
-    @UploadedFiles() files: Array<Express.Multer.File>,
+    @UploadedFiles() files: Express.Multer.File[],
     @Body() createAssignmentDto: CreateAssignmentDto,
   ) {
     if (!files || files.length === 0) {
       throw new BadRequestException('No files uploaded');
     }
-    // Handle file uploads and create assignment
+
+    // Set file paths
     const filePaths = files.map(file => `/uploads/${file.filename}`);
     createAssignmentDto.attachments = filePaths;
+
     return this.assignmentsService.create(createAssignmentDto);
   }
+
 }
